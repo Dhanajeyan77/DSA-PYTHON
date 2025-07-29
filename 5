@@ -1,0 +1,43 @@
+class Polyn:
+    def __init__(self, cof):
+        self.cof = cof
+
+    def evaluate(self, x):
+        result = 0
+        for exp, co in self.cof.items():
+            result += co * (x ** exp)
+        return result
+
+    def __add__(self, other):
+        result_c = {}
+        for exp, co in self.cof.items():
+            result_c[exp] = co
+        for exp, co in other.cof.items():
+            result_c[exp] = result_c.get(exp, 0) + co
+        return Polyn(result_c)
+
+    def __str__(self):
+        ts = []
+        for exp, co in self.cof.items():
+            if exp == 0:
+                t = str(co)
+            elif exp == 1:
+                t = f"{co}x"
+            else:
+                t = f"{co}x^{exp}"
+            ts.append(t)
+        return " + ".join(ts)
+
+# Example usage
+p1 = Polyn({2: 3, 1: 2, 0: 5})
+p2 = Polyn({2: 2, 1: -1, 0: 3})
+
+print("Polynomial 1:", p1)
+print("Polynomial 2:", p2)
+
+s_p = p1 + p2
+print("Sum:", s_p)
+
+x_v = 2
+print("poly1:", p1.evaluate(x_v))
+print("poly2:", p2.evaluate(x_v))
